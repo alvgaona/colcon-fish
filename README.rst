@@ -1,4 +1,4 @@
-colcon-zsh
+colcon-fish
 ==========
 
-An extension for `colcon-core <https://github.com/colcon/colcon-core>`_ to provide `Z shell <http://www.zsh.org>`_ scripts.
+An extension for `colcon-core <https://github.com/colcon/colcon-core>`_ to provide `Fish shell <https://fishshell.com/>`_ scripts.
