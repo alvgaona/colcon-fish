@@ -1,0 +1,12 @@
+apache
+colcon
+iterdir
+linter
+noqa
+pathlib
+plugin
+pydocstyle
+pytest
+scspell
+setuptools
+thomas
