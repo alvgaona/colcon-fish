@@ -1,4 +1,4 @@
-# Copyright 2016-2018 Dirk Thomas
+# Copyright 2024 Alvaro Gaona
 # Licensed under the Apache License, Version 2.0
 
 from pathlib import Path
@@ -13,8 +13,8 @@ from colcon_core.shell import use_all_shell_extensions
 from colcon_core.shell.template import expand_template
 
 
-class ZShell(ShellExtensionPoint):
-    """Generate `.zsh` scripts to extend the environment."""
+class FishShell(ShellExtensionPoint):
+    """Generate `.fish` scripts to extend the environment."""
 
     def __init__(self):  # noqa: D107
         super().__init__()
@@ -23,11 +23,11 @@ class ZShell(ShellExtensionPoint):
             raise SkipExtensionException('Not used on Windows systems')
 
     def create_prefix_script(self, prefix_path, merge_install):  # noqa: D102
-        prefix_env_path = prefix_path / 'local_setup.zsh'
+        prefix_env_path = prefix_path / 'local_setup.fish'
         logger.info(
             "Creating prefix script '{prefix_env_path}'".format_map(locals()))
         expand_template(
-            Path(__file__).parent / 'template' / 'prefix.zsh.em',
+            Path(__file__).parent / 'template' / 'prefix.fish.em',
             prefix_env_path,
             {
                 'python_executable': sys.executable,
@@ -36,12 +36,12 @@ class ZShell(ShellExtensionPoint):
             })
         # no need to copy prefix_util.py explicitly since zsh relies on sh
 
-        prefix_chain_env_path = prefix_path / 'setup.zsh'
+        prefix_chain_env_path = prefix_path / 'setup.fish'
         logger.info(
             "Creating prefix chain script '{prefix_chain_env_path}'"
             .format_map(locals()))
         expand_template(
-            Path(__file__).parent / 'template' / 'prefix_chain.zsh.em',
+            Path(__file__).parent / 'template' / 'prefix_chain.fish.em',
             prefix_chain_env_path,
             {
                 'chained_prefix_path': get_chained_prefix_path(
@@ -57,16 +57,16 @@ class ZShell(ShellExtensionPoint):
     def create_package_script(  # noqa: D102
         self, prefix_path, pkg_name, hooks
     ):
-        pkg_env_path = prefix_path / 'share' / pkg_name / 'package.zsh'
+        pkg_env_path = prefix_path / 'share' / pkg_name / 'package.fish'
         logger.info(
             "Creating package script '{pkg_env_path}'".format_map(locals()))
         expand_template(
-            Path(__file__).parent / 'template' / 'package.zsh.em',
+            Path(__file__).parent / 'template' / 'package.fish.em',
             pkg_env_path,
             {
                 'pkg_name': pkg_name,
                 'hooks': list(filter(
-                    lambda hook: str(hook[0]).endswith('.zsh'), hooks)),
+                    lambda hook: str(hook[0]).endswith('.fish'), hooks)),
                 'package_script_no_ext': 'package',
             })
         return [pkg_env_path]
