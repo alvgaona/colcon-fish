@@ -1,4 +1,4 @@
-# Copyright 2024 Alvaro Gaona
+# Copyright 2016-2018 Dirk Thomas
 # Licensed under the Apache License, Version 2.0
 
 from pathlib import Path
@@ -22,7 +22,7 @@ def test_spell_check(known_words):
 
     source_filenames = [Path(__file__).parents[1] / 'setup.py'] + \
         list(
-            (Path(__file__).parents[1] / 'colcon_zsh')
+            (Path(__file__).parents[1] / 'colcon_fish')
             .glob('**/*.py')) + \
         list((Path(__file__).parents[1] / 'test').glob('**/*.py'))
 

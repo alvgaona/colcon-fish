@@ -9,4 +9,5 @@ pydocstyle
 pytest
 scspell
 setuptools
+skipif
 thomas

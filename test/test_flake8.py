@@ -1,4 +1,4 @@
-# Copyright 2024 Alvaro Gaona
+# Copyright 2016-2018 Dirk Thomas
 # Licensed under the Apache License, Version 2.0
 
 import logging
@@ -33,7 +33,7 @@ def test_flake8():
     sys.stdout = sys.stderr
     # implicitly calls report_errors()
     report = style_guide.check_files([
-        str(Path(__file__).parents[1] / 'colcon_zsh'),
+        str(Path(__file__).parents[1] / 'colcon_fish'),
     ])
     report_tests = style_guide_tests.check_files([
         str(Path(__file__).parents[1] / 'test'),
