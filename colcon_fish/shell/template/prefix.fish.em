@@ -71,10 +71,10 @@ if test -n "$COLCON_PYTHON_EXECUTABLE"
     echo "error: COLCON_PYTHON_EXECUTABLE '$COLCON_PYTHON_EXECUTABLE' doesn't exist"
     return 1
   end
-  set -l _colcon_python_executable $COLCON_PYTHON_EXECUTABLE
+  set _colcon_python_executable $COLCON_PYTHON_EXECUTABLE
 else
   # try the Python executable known at configure time
-  set -l _colcon_python_executable "@(python_executable)"
+  set _colcon_python_executable "@(python_executable)"
   # if it doesn't exist try a fall back
   if test ! -f "$_colcon_python_executable"
     if ! /usr/bin/env python3 --version > /dev/null 2> /dev/null
@@ -100,7 +100,7 @@ end
 
 # get all commands in topological order
 set -l _colcon_ordered_commands (@
-$_colcon_python_executable "$_colcon_prefix_fish_COLCON_CURRENT_PREFIX/_local_setup_util_sh.py" fish fish@
+$_colcon_python_executable "$_colcon_prefix_fish_COLCON_CURRENT_PREFIX/_local_setup_util_fish.py" fish fish@
 @[if merge_install]@
  --merged-install@
 @[end if]@
@@ -110,11 +110,16 @@ if test -n "$COLCON_TRACE"
   echo "(functions _colcon_prefix_fish_source_script)"
   echo "# Execute generated script:"
   echo "# <<<"
-  echo $_colcon_ordered_commands
+  for _cmd in $_colcon_ordered_commands
+    echo "$_cmd"
+  end
   echo "# >>>"
   echo "functions -e _colcon_prefix_fish_source_script"
 end
-eval $_colcon_ordered_commands
+# execute all commands in order
+for _cmd in $_colcon_ordered_commands
+  eval $_cmd
+end
 set -e _colcon_ordered_commands
 
 functions -e _colcon_prefix_fish_source_script

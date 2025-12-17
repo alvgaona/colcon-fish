@@ -34,7 +34,17 @@ class FishShell(ShellExtensionPoint):
                 'merge_install': merge_install,
                 'package_script_no_ext': 'package',
             })
-        # no need to copy prefix_util.py explicitly since zsh relies on sh
+
+        # copy Fish-specific utility script
+        prefix_util_path = prefix_path / '_local_setup_util_fish.py'
+        logger.info(
+            "Creating prefix util module '{prefix_util_path}'"
+            .format_map(locals()))
+        with open(
+            Path(__file__).parent / '_local_setup_util_fish.py', 'r'
+        ) as source:
+            with open(prefix_util_path, 'w') as dest:
+                dest.write(source.read())
 
         prefix_chain_env_path = prefix_path / 'setup.fish'
         logger.info(
@@ -51,6 +61,7 @@ class FishShell(ShellExtensionPoint):
 
         return [
             prefix_env_path,
+            prefix_util_path,
             prefix_chain_env_path,
         ]
 

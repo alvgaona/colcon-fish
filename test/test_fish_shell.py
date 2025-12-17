@@ -23,8 +23,9 @@ def test_create_prefix_script(tmp_path):
     result = fish_shell.create_prefix_script(prefix_path, merge_install=False)
 
     # Check if the expected files were created
-    assert len(result) == 2
+    assert len(result) == 3
     assert (prefix_path / "local_setup.fish").exists()
+    assert (prefix_path / "_local_setup_util_fish.py").exists()
     assert (prefix_path / "setup.fish").exists()
 
 

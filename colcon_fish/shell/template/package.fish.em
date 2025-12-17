@@ -25,9 +25,8 @@ function _colcon_package_fish_source_script
   end
 end
 
-# source sh script of this package
-_colcon_package_fish_source_script "$_colcon_package_fish_COLCON_CURRENT_PREFIX/share/@(pkg_name)/package.sh"
 @[if hooks]@
+# source fish hooks
 
 # setting COLCON_CURRENT_PREFIX avoids determining the prefix in the sourced scripts
 set -gx COLCON_CURRENT_PREFIX $_colcon_package_fish_COLCON_CURRENT_PREFIX
